@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Publisher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Source Code Pro", monospace; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #000; color: #fff; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
+        textarea { width: 100vw; height: 100vh; padding: 15px; border: none; background: #000; color: white; font-size: 10px; resize: none; }
+        .floating-btn { position: fixed; bottom: 15px; right: 15px; background: #000; border: 1px solid #121212; cursor: pointer; border-radius: 50px; width: 50px; height: 50px; color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .floating-btn:hover { border: 1px solid #242424; }
+        .floating-select { position: fixed; bottom: 15px; left: 15px; background: #000; border: 1px solid #121212; color: white; border: none; padding: 10px; border-radius: 5px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <form>
+        <textarea placeholder="Enter file contents here"></textarea>
+        <select class="floating-select">
+            <option value="python">Python</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="javascript">JavaScript</option>
+            <option value="php">PHP</option>
+            <option value="ruby">Ruby</option>
+            <option value="perl">Perl</option>
+            <option value="bash">Bash</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="csharp">C#</option>
+            <option value="c">C</option>
+        </select>
+        <button type="button" class="floating-btn">PUB</button>
+    </form>
+</body>
+</html>

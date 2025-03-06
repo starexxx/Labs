@@ -267,7 +267,7 @@ template_wrong_route = """
 
 """
 
-@app.route("/")
+@app.route("/sharing")
 def home():
     return render_template_string(template_home)
 

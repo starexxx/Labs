@@ -2,32 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <title>Script</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Code</title>
     <style>
-        body { background-color: #000; color: #ffffff; margin: 0; font-family: Arial, sans-serif; overflow: hidden; }
-        pre { width: 100vw; height: 100vh; overflow: auto; padding: 20px; background: #000; }
-        code { background: #000 !important; display: block; padding: 10px; border-radius: 5px; }
-        .copy-btn { position: fixed; bottom: 20px; right: 20px; background: #000; border: 1px solid #121212; cursor: pointer; border-radius: 50%; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; transition: background 0.3s, transform 0.2s; }
-        .copy-btn:hover { background: #121212; }
-        .copy-btn svg { width: 24px; height: 24px; fill: #ffffff; }
+        body { background: #000; color: white; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        pre { background: #111; padding: 10px; border-radius: 5px; text-align: left; white-space: pre-wrap; }
+        button { margin-top: 10px; padding: 10px 20px; background: #222; color: white; border: none; cursor: pointer; }
+        button:hover { background: #333; }
     </style>
 </head>
 <body>
-    <pre><code class="language-python"># Your code will be displayed here...</code></pre>
-    <button class="copy-btn" onclick="copyCode()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 2H8v2h8V2zm-5 4h2v2h-2V6zM3 10h18v10H3V10zm2 2v6h14v-6H5zm7 1h2v2h-2v-2z"/></svg>
-    </button>
+    <h1>Published Code</h1>
+    <pre id="codeDisplay">Loading...</pre>
+    <button onclick="copyCode()">Copy Code</button>
+
     <script>
-        function copyCode() {
-            const codeElement = document.querySelector('pre code');
-            navigator.clipboard.writeText(codeElement.textContent).then(() => {
-                alert('Code copied to clipboard!');
-            });
+        function getQueryParam(name) {
+            let params = new URLSearchParams(window.location.search);
+            return params.get(name);
         }
+
+        function loadCode() {
+            let codeID = getQueryParam("id");
+            let code = localStorage.getItem(codeID);
+            if (code) {
+                document.getElementById("codeDisplay").textContent = code;
+            } else {
+                window.location.href = "404.html";
+            }
+        }
+
+        function copyCode() {
+            let codeText = document.getElementById("codeDisplay").textContent;
+            navigator.clipboard.writeText(codeText).then(() => alert("Code copied!"));
+        }
+
+        loadCode();
     </script>
 </body>
 </html>

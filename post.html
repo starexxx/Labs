@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starexx Blogs</title>
+    <style>
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .content {
+            background: #111;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .content h1 {
+            margin: 0;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .content a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="post-content" class="content"></div>
+        <a href="index.html">Back to Home</a>
+    </div>
+
+    <script>
+        // Function to load and display post details
+        async function loadPost() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const file = urlParams.get('file');
+
+            if (file) {
+                const response = await fetch(`Posts/${file}`);
+                const post = await response.json();
+
+                const postContent = document.getElementById('post-content');
+                postContent.innerHTML = `
+                    <h1>${post.Post.Tittle}</h1>
+                    <p>${post.Post.About}</p>
+                    <p>${post.Post.Content}</p>
+                    ${post.Post.File ? `<a href="${post.Post.File}" download>Download File</a>` : ''}
+                `;
+            }
+        }
+
+        loadPost();
+    </script>
+</body>
+</html>

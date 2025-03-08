@@ -10,17 +10,22 @@
             color: white;
             font-family: Arial, sans-serif;
             padding: 20px;
+            margin: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
+            flex: 1;
         }
         .content {
             background: #111;
             padding: 15px;
             border-radius: 10px;
         }
-        .content h1 {
+        .content h1, .content p {
             margin: 0;
         }
         .content p {
@@ -33,13 +38,43 @@
         .content a:hover {
             text-decoration: underline;
         }
+        #post-title {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        #post-about {
+            font-size: 1.2em;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #000;
+            text-align: center;
+            padding: 10px 0;
+        }
+        footer a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div id="post-title"></div>
+        <div id="post-about"></div>
         <div id="post-content" class="content"></div>
-        <a href="index.html">Back to Home</a>
     </div>
+
+    <footer>
+        <a href="index.html">Back to Home</a>
+    </footer>
 
     <script>
         async function loadPost() {
@@ -51,11 +86,13 @@
                     const response = await fetch(`Posts/${file}`);
                     if (!response.ok) throw new Error('Failed to fetch post');
                     const post = await response.json();
-
+                    const postTitle = document.getElementById('post-title');
+                    const postAbout = document.getElementById('post-about');
                     const postContent = document.getElementById('post-content');
+
+                    postTitle.innerHTML = `<h1>${post.Post.Tittle}</h1>`;
+                    postAbout.innerHTML = `<p>${post.Post.About}</p>`;
                     postContent.innerHTML = `
-                        <h1>${post.Post.Tittle}</h1>
-                        <p>${post.Post.About}</p>
                         <p>${post.Post.Content}</p>
                         ${post.Post.File ? `<a href="${post.Post.File}" download>Download File</a>` : ''}
                     `;

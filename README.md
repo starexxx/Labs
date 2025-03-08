@@ -85,9 +85,9 @@ project/
 ├── index.html
 ├── post.html      
 ├── Posts/             
-│   ├── post1.json
-│   ├── post2.json
-│   └── ...
+│   ├── mypost.json
+│   ├── mypost2.json
+│   └── more
 │
 └── README.md
 ```
@@ -100,7 +100,3 @@ project/
    ```bash
    git clone https://github.com/starexxx/blogs.git
    ```
-
-## Support
-
-If you encounter any issues or have questions, feel free to reach out!

@@ -1,0 +1,8 @@
+{
+  "Post": {
+    "Tittle": "Hello, World",
+    "About": "This is my blog website",
+    "Content": "If you want source code of this website then visit (github.com/starexxx/blogs/)",
+    "File": false
+  }
+}

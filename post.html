@@ -42,22 +42,31 @@
     </div>
 
     <script>
-        // Function to load and display post details
         async function loadPost() {
             const urlParams = new URLSearchParams(window.location.search);
             const file = urlParams.get('file');
 
             if (file) {
-                const response = await fetch(`Posts/${file}`);
-                const post = await response.json();
+                try {
+                    const response = await fetch(`Posts/${file}`);
+                    if (!response.ok) throw new Error('Failed to fetch post');
+                    const post = await response.json();
 
+                    const postContent = document.getElementById('post-content');
+                    postContent.innerHTML = `
+                        <h1>${post.Post.Tittle}</h1>
+                        <p>${post.Post.About}</p>
+                        <p>${post.Post.Content}</p>
+                        ${post.Post.File ? `<a href="${post.Post.File}" download>Download File</a>` : ''}
+                    `;
+                } catch (error) {
+                    console.error('Error loading post:', error);
+                    const postContent = document.getElementById('post-content');
+                    postContent.innerHTML = `<p>Error loading post. Please try again later.</p>`;
+                }
+            } else {
                 const postContent = document.getElementById('post-content');
-                postContent.innerHTML = `
-                    <h1>${post.Post.Tittle}</h1>
-                    <p>${post.Post.About}</p>
-                    <p>${post.Post.Content}</p>
-                    ${post.Post.File ? `<a href="${post.Post.File}" download>Download File</a>` : ''}
-                `;
+                postContent.innerHTML = `<p>Post not found.</p>`;
             }
         }
 

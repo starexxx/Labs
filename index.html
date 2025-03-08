@@ -45,25 +45,28 @@
     <script>
         async function loadPosts() {
             const postsContainer = document.getElementById('posts');
-            const response = await fetch('Posts/');
-            const files = await response.json();
-
+            const files = [
+                'post1.json'
+            ];
             files.forEach(file => {
-                if (file.endsWith('.json')) {
-                    fetch(`Posts/${file}`)
-                        .then(response => response.json())
-                        .then(post => {
-                            const postElement = document.createElement('div');
-                            postElement.className = 'post';
-                            postElement.innerHTML = `
-                                <h2>${post.Post.Tittle}</h2>
-                                <p>${post.Post.About}</p>
-                                <a href="post.html?file=${file}">Read More</a>
-                            `;
-                            postsContainer.appendChild(postElement);
-                        })
-                        .catch(error => console.error('Error loading post:', error));
-                }
+                fetch(`Posts/${file}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to fetch post');
+                        return response.json();
+                    })
+                    .then(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'post';
+                        postElement.innerHTML = `
+                            <h2>${post.Post.Tittle}</h2>
+                            <p>${post.Post.About}</p>
+                            <a href="post.html?file=${file}">Read More</a>
+                        `;
+                        postsContainer.appendChild(postElement);
+                    })
+                    .catch(error => {
+                        console.error('Error loading post:', error);
+                    });
             });
         }
         loadPosts();

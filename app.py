@@ -155,7 +155,7 @@ home = """
             background-color: #121212;
             color: #fff;
         }
-</style>
+    </style>
 </head>
 <body>
     <div class="container">
@@ -166,7 +166,7 @@ home = """
                 <div class="post-title">{{ post.title }}</div>
                 <i class="material-icons expand-icon icon">expand_more</i>
             </div>
-            <div class="post-content">
+            <div class="post-content" id="post-content-{{ loop.index }}">
                 {{ post.content|safe }}
                 {% if post.script and post.script != 'null' %}
                 <pre>
@@ -180,6 +180,21 @@ home = """
     </div>
 
     <script>
+        // Function to convert URLs to links
+        function linkifyUrls() {
+            const contentElements = document.querySelectorAll('.post-content');
+            
+            contentElements.forEach(element => {
+                // Regular expression to match URLs
+                const urlRegex = /(https?:\/\/[^\s]+)/g;
+                
+                // Replace URLs with anchor tags
+                element.innerHTML = element.innerHTML.replace(urlRegex, url => {
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+                });
+            });
+        }
+
         function togglePost(postElement) {
             const wasExpanded = postElement.classList.contains('expanded');
             const icon = postElement.querySelector('.expand-icon');
@@ -218,6 +233,9 @@ home = """
             window.getSelection().removeAllRanges();
             event.stopPropagation();
         }
+
+        // Call the linkify function when the page loads
+        document.addEventListener('DOMContentLoaded', linkifyUrls);
     </script>
 </body>
 </html>

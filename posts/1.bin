@@ -1,0 +1,12 @@
+title = """
+Starexx AI API
+"""
+content = """
+AI-powered assistant Whether you need help with daily tasks, information, or just want to chat, Starexx AI is here!
+API Example: https://starexxai.vercel.app/chat/Hello
+"""
+script = """
+{
+  "Starexx": "Hello! How can I assist you today?"
+}
+"""

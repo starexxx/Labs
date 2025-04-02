@@ -48,14 +48,12 @@ home = """
             padding: 0 0;
             cursor: pointer;
             border-radius: 4px;
-            margin-bottom: 12px;
         }
         
         .post-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
         }
         
         .post-title {
@@ -65,16 +63,13 @@ home = """
         }
         
         .post-content {
-            padding-top: 0;
+            padding-top: 12px;
             color: #ccc;
+            margin-top: 8px;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
             font-weight: 400;
-        }
-        
-        .post-content-inner {
-            padding-bottom: 16px;
         }
         
         .icon {
@@ -83,7 +78,7 @@ home = """
         }
         
         .expanded .post-content {
-            max-height: 5000px; /* Large enough to accommodate content */
+            max-height: 5000px;
             transition: max-height 0.5s ease-in;
         }
         
@@ -122,7 +117,7 @@ home = """
         .copy-icon {
             position: absolute;
             right: 8px;
-            top: 8px;
+            top: 25px;
             color: #666;
             cursor: pointer;
             background: #000;
@@ -160,7 +155,7 @@ home = """
             background-color: #121212;
             color: #fff;
         }
-    </style>
+</style>
 </head>
 <body>
     <div class="container">
@@ -171,59 +166,35 @@ home = """
                 <div class="post-title">{{ post.title }}</div>
                 <i class="material-icons expand-icon icon">expand_more</i>
             </div>
-            <div class="post-content" id="post-content-{{ loop.index }}">
-                <div class="post-content-inner">
-                    {{ post.content|safe }}
-                    {% if post.script and post.script != 'null' %}
-                    <pre>
-                        <code id="code{{ loop.index }}">{{ post.script }}</code>
-                        <i class="material-icons copy-icon" onclick="copyCode('code{{ loop.index }}', event)">content_copy</i>
-                    </pre>
-                    {% endif %}
-                </div>
+            <div class="post-content">
+                {{ post.content|safe }}
+                {% if post.script and post.script != 'null' %}
+                <pre>
+                    <code id="code{{ loop.index }}">{{ post.script }}</code>
+                    <i class="material-icons copy-icon" onclick="copyCode('code{{ loop.index }}', event)">content_copy</i>
+                </pre>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
 
     <script>
-        // Function to convert URLs to links
-        function linkifyUrls() {
-            const contentElements = document.querySelectorAll('.post-content-inner');
-            
-            contentElements.forEach(element => {
-                // Regular expression to match URLs
-                const urlRegex = /(https?:\/\/[^\s]+)/g;
-                
-                // Replace URLs with anchor tags
-                element.innerHTML = element.innerHTML.replace(urlRegex, url => {
-                    return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-                });
-            });
-        }
-
         function togglePost(postElement) {
             const wasExpanded = postElement.classList.contains('expanded');
             const icon = postElement.querySelector('.expand-icon');
             
-            // Close all other expanded posts
             document.querySelectorAll('.post.expanded').forEach(expandedPost => {
                 if (expandedPost !== postElement) {
                     expandedPost.classList.remove('expanded');
                     expandedPost.querySelector('.expand-icon').textContent = 'expand_more';
+                    expandedPost.querySelector('.expand-icon').style.transform = 'rotate(0deg)';
                 }
             });
             
-            // Toggle current post
             postElement.classList.toggle('expanded');
             icon.textContent = wasExpanded ? 'expand_more' : 'expand_less';
-            
-            // Smooth scroll to the expanded post if opening
-            if (!wasExpanded) {
-                setTimeout(() => {
-                    postElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 10);
-            }
+            icon.style.transform = wasExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
         }
         
         function copyCode(id, event) {
@@ -247,9 +218,6 @@ home = """
             window.getSelection().removeAllRanges();
             event.stopPropagation();
         }
-
-        // Call the linkify function when the page loads
-        document.addEventListener('DOMContentLoaded', linkifyUrls);
     </script>
 </body>
 </html>

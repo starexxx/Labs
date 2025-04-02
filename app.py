@@ -264,5 +264,9 @@ def index():
     
     return render_template_string(home, posts=posts)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return """<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Error</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"><style>body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-color:#000;color:#fff;margin:0;padding:40px}.content{max-width:500px;margin:0}h1{font-size:24px;font-weight:600;margin-bottom:8px}p{color:#999;margin-bottom:24px;line-height:1.5}.home-link{color:#58a6ff;text-decoration:none;font-weight:400;font-size:14px}.home-link:hover{text-decoration:underline}</style></head><body><div class="content"><h1>Page Not Found</h1><p>The requested endpoint isn't registered on this server.</p><a href="/" class="home-link">Go Homepage</a></div></body></html>""", 404
+
 if __name__ == '__main__':
     app.run(debug=True)
